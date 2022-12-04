@@ -3,6 +3,8 @@
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}
         </h2>
+
+        <a href="{{ route('markers-create') }}">Create</a>
     </x-slot>
 
     <div class="py-12">
@@ -10,13 +12,13 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 bg-white border-b border-gray-200">
                     <table>
-                        <th>
-                            <td>ID</td>
-                            <td>Mobile</td>
-                            <td>Description</td>
-                            <td>Coordinates</td>
-                            <td>Actions</td>
-                        </th>
+                        <tr>
+                            <th>ID</th>
+                            <th>Mobile</th>
+                            <th>Description</th>
+                            <th>Coordinates</th>
+                            <th>Actions</th>
+                        </tr>
                         <tbody>
                             @foreach ($data as $item)
                                 <tr>
@@ -24,7 +26,14 @@
                                     <td>{{ $item->mobile }}</td>
                                     <td>{{ $item->description }}</td>
                                     <td>{{ $item->coordinates }}</td>
-                                    <td></td>
+                                    <td>
+                                        <form method="POST" action="{{ route('markers-delete', $item->id) }}">
+                                            {{ csrf_field() }}
+                                            {{ method_field('DELETE') }}
+
+                                            <input type="submit" value="Delete">
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

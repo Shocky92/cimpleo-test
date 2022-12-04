@@ -26,7 +26,7 @@ class MarkerController extends Controller
      */
     public function create()
     {
-        //
+        return view('markers.create');
     }
 
     /**
@@ -37,41 +37,10 @@ class MarkerController extends Controller
      */
     public function store(StoreMarkerRequest $request)
     {
-        //
-    }
+        $marker = new Marker($request->all());
+        $marker->save();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Marker  $marker
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Marker $marker)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Marker  $marker
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Marker $marker)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \App\Http\Requests\UpdateMarkerRequest  $request
-     * @param  \App\Models\Marker  $marker
-     * @return \Illuminate\Http\Response
-     */
-    public function update(UpdateMarkerRequest $request, Marker $marker)
-    {
-        //
+        return redirect(route('markers'));
     }
 
     /**
@@ -82,6 +51,7 @@ class MarkerController extends Controller
      */
     public function destroy(Marker $marker)
     {
-        //
+        $marker->delete();
+        return redirect(route('markers'));
     }
 }

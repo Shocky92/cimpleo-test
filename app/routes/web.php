@@ -22,6 +22,11 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::get('/markers', [MarkerController::class, 'index'])->middleware(['auth'])->name('markers');
+Route::prefix('markers')->middleware(['auth'])->group(function () {
+    Route::get('/', [MarkerController::class, 'index'])->name('markers');
+    Route::get('/create', [MarkerController::class, 'create'])->name('markers-create');
+    Route::post('/store', [MarkerController::class, 'store'])->name('markers-store');
+    Route::delete('/delete/{marker}', [MarkerController::class, 'destroy'])->name('markers-delete');
+});
 
 require __DIR__.'/auth.php';
