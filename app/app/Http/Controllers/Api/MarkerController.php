@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreMarkerRequest;
 use App\Models\Marker;
 
@@ -15,17 +16,19 @@ class MarkerController extends Controller
     public function index()
     {
         $markers = Marker::all();
-        return view('markers.index', ['data' => $markers]);
+        return response()->json($markers);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * @param Marker $marker
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function search(Marker $marker)
     {
-        return view('markers.create');
+        $marker = Marker::where('mobile', $marker->mobile)->first();
+
+        return response()->json($marker);
     }
 
     /**
@@ -39,7 +42,7 @@ class MarkerController extends Controller
         $marker = new Marker($request->all());
         $marker->save();
 
-        return redirect(route('markers'));
+        return response()->json($marker);
     }
 
     /**
@@ -51,6 +54,6 @@ class MarkerController extends Controller
     public function destroy(Marker $marker)
     {
         $marker->delete();
-        return redirect(route('markers'));
+        return response();
     }
 }

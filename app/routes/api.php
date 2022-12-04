@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\MarkerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +17,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+// ->middleware(['auth:sanctum'])
+Route::prefix('markers')->group(function () {
+    Route::get('/', [MarkerController::class, 'index'])->name('api-markers');
+    Route::get('/search/{marker:mobile}', [MarkerController::class, 'search'])->name('api-markers-search');
+    Route::post('/store', [MarkerController::class, 'store'])->name('api-markers-store');
+    Route::delete('/delete/{marker}', [MarkerController::class, 'destroy'])->name('api-markers-delete');
 });
