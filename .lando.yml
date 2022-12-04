@@ -1,0 +1,4 @@
+name: cimpleo-test
+recipe: laravel
+config:
+  webroot: app/public
