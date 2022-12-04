@@ -2,3 +2,11 @@ name: cimpleo-test
 recipe: laravel
 config:
   webroot: app/public
+services:
+  node:
+    type: node:16
+tooling:
+  node:
+    service: node
+  npm:
+    service: node
