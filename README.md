@@ -21,3 +21,6 @@ Test application
 
 # Для генерирования меток используется сидер
 `php artisan db:seed --class=MarkerSeeder`
+
+# Для отображения карты
+Необходимо добавить ключ YANDEX_MAPS_KEY в файл .env
