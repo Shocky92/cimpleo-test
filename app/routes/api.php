@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\MarkerController;
@@ -19,10 +20,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// ->middleware(['auth:sanctum'])
+Route::post('/auth/login', [AuthController::class, 'loginUser']);
+
 Route::prefix('markers')->group(function () {
     Route::get('/', [MarkerController::class, 'index'])->name('api-markers');
-    Route::get('/search/{marker:mobile}', [MarkerController::class, 'search'])->name('api-markers-search');
-    Route::post('/store', [MarkerController::class, 'store'])->name('api-markers-store');
-    Route::delete('/delete/{marker}', [MarkerController::class, 'destroy'])->name('api-markers-delete');
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::get('/search/{marker:mobile}', [MarkerController::class, 'search'])->name('api-markers-search');
+        Route::post('/store', [MarkerController::class, 'store'])->name('api-markers-store');
+        Route::delete('/delete/{marker}', [MarkerController::class, 'destroy'])->name('api-markers-delete');
+    });
 });
